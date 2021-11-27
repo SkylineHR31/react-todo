@@ -1,0 +1,25 @@
+@import "./mixin.scss";
+
+.todo-app {
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    @include boxShadow;
+
+    &-header {
+        min-height: 100px;
+        @include blockBorder;
+        @include blockPaddings;
+    }
+
+    &-body {
+        flex: 1;
+        @include blockBorder;
+        @include blockPaddings;
+    }
+
+    &-footer {
+        min-height: 100px;
+        @include blockPaddings;
+    }
+}
