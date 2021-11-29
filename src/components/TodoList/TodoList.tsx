@@ -1,11 +1,14 @@
 import React from "react";
 
-const TodoList: React.FC = () => {
-    return (
-        <ul className="todo-list">
-            
-        </ul>
-    );
-  }
-  
-  export default TodoList;
+import TodoListItem from "../TodoListItem/TodoListItem";
+import { listItem } from "../../App";
+
+const TodoList: React.FC<{
+  toDoList: listItem[];
+  removeHandler: () => void;
+  checkHandler: () => void;
+}> = ({ toDoList, removeHandler, checkHandler }) => {
+  return <ul className="todo-list">{/* {{list}} */}</ul>;
+};
+
+export default TodoList;
