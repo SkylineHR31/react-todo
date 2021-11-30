@@ -48,16 +48,23 @@ export const App: React.FC = () => {
     }
   };
 
-  const removeItem = (): void => {};
+  const removeItem = (id?: number)=> {};
 
-  const checkItem = (): void => {};
+  const checkItem = (id?: number) => {
+    setList(prev => prev.map((item) => {
+      if (item.id === id) {
+        item.checked = !item.checked
+      }
+      return item
+    }))
+  };
 
   useEffect(() => {
-    setList(JSON.parse(window.localStorage.getItem("todosList") || ""))
+    setList(JSON.parse(window.localStorage.getItem("todosList") || ""));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("todosList", JSON.stringify(list))
+    window.localStorage.setItem("todosList", JSON.stringify(list));
   }, [list]);
 
   return (

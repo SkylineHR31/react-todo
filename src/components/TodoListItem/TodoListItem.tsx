@@ -10,19 +10,19 @@ import "./TodoListItem.scss";
 
 interface ITodoListItem {
   title: string;
+  id: number;
   checked: boolean;
-  removeHandler: () => void;
-  checkHandler: () => void;
+  removeHandler: (id?: number) => any;
+  checkHandler: (id?: number) => any;
 }
 
 const TodoListItem: React.FC<ITodoListItem> = ({
   title,
+  id,
   checked,
   removeHandler,
   checkHandler,
 }) => {
-  const onChangeCheckHandler = () => {};
-
   return (
     <li className="todo-list-item">
       <label className="todo-list-item-text">
@@ -32,15 +32,13 @@ const TodoListItem: React.FC<ITodoListItem> = ({
           id="todoInputCheckbox"
           className="todo-list-item-check"
           checked={checked}
-          onChange={() => {
-            checkHandler();
-          }}
+          onChange={checkHandler.bind(null, id)}
         />
         <span className="title">{title}</span>
       </label>
       <button
         onClick={() => {
-          removeHandler();
+          removeHandler(id);
         }}
         className="todo-list-item-remove"
       >

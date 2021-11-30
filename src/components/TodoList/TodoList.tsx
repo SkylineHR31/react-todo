@@ -9,8 +9,8 @@ import "./TodoList.scss";
 
 interface ITodoList {
   toDoList: listItem[];
-  removeHandler: () => void;
-  checkHandler: () => void;
+  removeHandler: (id?: number) => any;
+  checkHandler: (id?: number) => any;
 }
 
 const TodoList: React.FC<ITodoList> = ({
@@ -27,6 +27,7 @@ const TodoList: React.FC<ITodoList> = ({
               key={item.id}
               title={item.title}
               checked={item.checked}
+              id={item.id}
               removeHandler={removeHandler}
               checkHandler={checkHandler}
             ></TodoListItem>
