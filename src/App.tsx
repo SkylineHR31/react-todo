@@ -52,15 +52,6 @@ export const App: React.FC = () => {
     }));
   };
 
-  // const checkItem = (id?: number) => {
-  //   setList(prev => prev.map((item) => {
-  //     if (item.id === id) {
-  //       item.checked = !item.checked
-  //     }
-  //     return item
-  //   }))
-  // };
-
   const checkItem = (id?: number) => {
     let itemIndex = list.findIndex((_item) => {
       return _item.id === id;
