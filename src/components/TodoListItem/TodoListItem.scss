@@ -1,0 +1,31 @@
+@import "../../styles/variables.scss";
+
+.todo-list-item {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: $font-header;
+    background-color: $item-bcg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+
+    .title {
+        text-transform: uppercase;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    &-text {
+        display: flex;
+        align-items: center;
+    }
+
+    &-check {
+        margin-right: 10px;
+    }
+
+    &-remove {
+        color: $red-font;
+    }
+}

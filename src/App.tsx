@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // components
 import TodoList from "./components/TodoList/TodoList";
@@ -14,13 +14,38 @@ import "./styles/todo.scss";
 // images
 
 export const App: React.FC = () => {
-  const [list, setList] = useState<listItem[]>();
-  const [inputText, setInputText] = useState<string>();
+  const [list, setList] = useState<listItem[]>([]);
+  const [inputText, setInputText] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const addButtonHandler = (): void => {};
+  const addButtonHandler = (title: string): void => {
+    const newItem: listItem = {
+      title: title,
+      id: Date.now(),
+      checked: false,
+    };
+    setList([newItem, ...list]);
+    console.log(list);
+    setInputText("");
+  };
 
-  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const inputChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setInputText(event.target.value);
+  };
+
+  const inputKeyPress = (event: React.KeyboardEvent): void => {
+    if (event.key === "Enter") {
+      const newItem: listItem = {
+        title: inputRef.current!.value,
+        id: Date.now(),
+        checked: false,
+      };
+      setList((prev) => [newItem, ...prev]);
+      console.log(list);
+      setInputText("");
+    }
   };
 
   const removeItem = (): void => {};
@@ -38,23 +63,19 @@ export const App: React.FC = () => {
             <div className="todo-app-body">
               <div className="todo-app-input-wrapper">
                 <input
-                  type="checkbox"
-                  name="todoInputCheckbox"
-                  id="todoInputCheckbox"
-                  className="todo-app-input-check"
-                />
-                <input
                   className="todo-app-input"
                   type="text"
                   name="todoInputText"
                   id="todoInputText"
                   placeholder="Please enter your task..."
-                  onChange={() => {inputChangeHandler}}
+                  onChange={inputChangeHandler}
+                  onKeyDown={inputKeyPress}
                   value={inputText}
+                  ref={inputRef}
                 />
                 <button
                   onClick={() => {
-                    addButtonHandler();
+                    addButtonHandler(inputText);
                   }}
                   className="todo-app-input-control"
                 >
@@ -66,7 +87,7 @@ export const App: React.FC = () => {
               </div>
               <div className="todo-list-wrapper">
                 <TodoList
-                  toDoList={list!}
+                  toDoList={list}
                   removeHandler={removeItem}
                   checkHandler={checkItem}
                 ></TodoList>
@@ -84,5 +105,6 @@ export default App;
 
 export type listItem = {
   title: string;
+  id: number;
   checked: boolean;
 };

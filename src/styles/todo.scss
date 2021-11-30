@@ -36,6 +36,7 @@
             justify-content: space-between;
             height: 32px;
             gap: 32px;
+            margin-bottom: 20px;
         }
 
         &-control {
@@ -45,10 +46,6 @@
             color: $font-header;
             width: 32px;
             height: 32px;
-        }
-
-        &-check {
-            margin: 0;
         }
     }
 }
