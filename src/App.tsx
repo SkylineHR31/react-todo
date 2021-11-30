@@ -25,7 +25,6 @@ export const App: React.FC = () => {
       checked: false,
     };
     setList([newItem, ...list]);
-    console.log(list);
     setInputText("");
   };
 
@@ -43,20 +42,35 @@ export const App: React.FC = () => {
         checked: false,
       };
       setList((prev) => [newItem, ...prev]);
-      console.log(list);
       setInputText("");
     }
   };
 
-  const removeItem = (id?: number)=> {};
+  const removeItem = (id?: number) => {
+    setList(prev => prev.filter((item) => {
+      return item.id !== id;
+    }));
+  };
+
+  // const checkItem = (id?: number) => {
+  //   setList(prev => prev.map((item) => {
+  //     if (item.id === id) {
+  //       item.checked = !item.checked
+  //     }
+  //     return item
+  //   }))
+  // };
 
   const checkItem = (id?: number) => {
-    setList(prev => prev.map((item) => {
-      if (item.id === id) {
-        item.checked = !item.checked
-      }
-      return item
-    }))
+    let itemIndex = list.findIndex((_item) => {
+      return _item.id === id;
+    });
+
+    if (itemIndex > -1) {
+      list[itemIndex].checked = !list[itemIndex].checked;
+    }
+
+    setList([...list]);
   };
 
   useEffect(() => {
