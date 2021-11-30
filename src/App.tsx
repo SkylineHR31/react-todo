@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 // components
 import TodoList from "./components/TodoList/TodoList";
@@ -51,6 +51,14 @@ export const App: React.FC = () => {
   const removeItem = (): void => {};
 
   const checkItem = (): void => {};
+
+  useEffect(() => {
+    setList(JSON.parse(window.localStorage.getItem("todosList") || ""))
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("todosList", JSON.stringify(list))
+  }, [list]);
 
   return (
     <main className="app">
