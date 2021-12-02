@@ -24,7 +24,11 @@ export const App: React.FC = () => {
       id: Date.now(),
       checked: false,
     };
-    setList([newItem, ...list]);
+    if (title) {
+      setList([newItem, ...list]);
+    } else {
+      return;
+    }
     setInputText("");
   };
 
@@ -35,7 +39,7 @@ export const App: React.FC = () => {
   };
 
   const inputKeyPress = (event: React.KeyboardEvent): void => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && inputRef.current?.value) {
       const newItem: listItem = {
         title: inputRef.current!.value,
         id: Date.now(),
@@ -43,13 +47,17 @@ export const App: React.FC = () => {
       };
       setList((prev) => [newItem, ...prev]);
       setInputText("");
+    } else {
+      return;
     }
   };
 
   const removeItem = (id?: number) => {
-    setList(prev => prev.filter((item) => {
-      return item.id !== id;
-    }));
+    setList((prev) =>
+      prev.filter((item) => {
+        return item.id !== id;
+      })
+    );
   };
 
   const checkItem = (id?: number) => {

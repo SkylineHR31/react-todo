@@ -3,7 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // icons
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 // styles
 import "./TodoListItem.scss";
@@ -36,6 +36,15 @@ const TodoListItem: React.FC<ITodoListItem> = ({
         />
         <span className="title">{title}</span>
       </label>
+      <div className="todo-list-item-controls">
+      <button
+        onClick={() => {
+          // editHandler(id);
+        }}
+        className="todo-list-item-edit"
+      >
+        <FontAwesomeIcon size="2x" icon={faEdit}></FontAwesomeIcon>
+      </button>
       <button
         onClick={() => {
           removeHandler(id);
@@ -44,6 +53,7 @@ const TodoListItem: React.FC<ITodoListItem> = ({
       >
         <FontAwesomeIcon size="2x" icon={faTrash}></FontAwesomeIcon>
       </button>
+      </div>
     </li>
   );
 };
