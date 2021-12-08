@@ -6,8 +6,9 @@ const initialState: listItem[] = JSON.parse(window.localStorage.getItem("todosLi
 
 export default function todoReducer(state = initialState, action: IAction<any>): listItem[] {
   switch (action.type) {
-    case TodoActionsEnum.CHECK_TODO: return [...state, action.payload.todoId]
-    case TodoActionsEnum.REMOVE_TODO: return [...state, action.payload.todoId]
+    case TodoActionsEnum.CHECK_TODO: return state;
+    case TodoActionsEnum.REMOVE_TODO: return state;
+    case TodoActionsEnum.ADD_TODO: return {...state, ...action.payload};
     default:
       return state;
   }

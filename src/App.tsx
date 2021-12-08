@@ -10,6 +10,7 @@ import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 // styles
 import "./styles/layout.scss";
 import "./styles/todo.scss";
+import { useDispatch, useSelector } from "react-redux";
 
 // images
 
@@ -17,6 +18,9 @@ export const App: React.FC = () => {
   const [list, setList] = useState<listItem[]>([]);
   const [inputText, setInputText] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const dispatch = useDispatch();
+  const storeTodos = useSelector(state => state);
 
   const addButtonHandler = (title: string): void => {
     const newItem: listItem = {
@@ -87,6 +91,9 @@ export const App: React.FC = () => {
           <div className="todo-app">
             <header className="todo-app-header">
               <h1 className="title">To do app</h1>
+              {/* <div className="todostosod">
+              {store}
+              </div> */}
             </header>
             <div className="todo-app-body">
               <div className="todo-app-input-wrapper">

@@ -10,6 +10,7 @@ export enum TodoActionsEnum {
   CHECK_TODO = "CHECK_TODO",
   REMOVE_TODO = "REMOVE_TODO",
   EDIT_TODO = "EDIT_TODO",
+  ADD_TODO = "ADD_TODO",
 }
 
 interface ICheckToDo {
@@ -22,6 +23,11 @@ interface IRemoveToDo {
   payload: listItem[];
 }
 
+interface IAddToDo {
+  type: TodoActionsEnum.ADD_TODO;
+  payload: listItem;
+}
+
 // edit here
 
-export type TodoActions = ICheckToDo | IRemoveToDo;
+export type TodoActions = ICheckToDo | IRemoveToDo | IAddToDo;
