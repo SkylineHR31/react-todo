@@ -1,4 +1,4 @@
-import { IAction, TodoActionsEnum, TodoActions } from "../../types/todo";
+import { TodoActionsEnum, TodoActions } from "../../types/todo";
 import { listItem } from "../../App";
 import { Dispatch } from "redux";
 
@@ -28,6 +28,5 @@ export const addItemHandler = (
     } else {
       return;
     }
-    //   setInputText("");
   };
 };

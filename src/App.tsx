@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+// store imports
+import { useTypedSelector } from "./hookah/useTypedSelector";
 
 // components
 import TodoList from "./components/TodoList/TodoList";
@@ -10,7 +14,7 @@ import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 // styles
 import "./styles/layout.scss";
 import "./styles/todo.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { addItemHandler } from "./store/actionsCreators/ToDoActionCreators";
 
 // images
 
@@ -20,21 +24,21 @@ export const App: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
-  const storeTodos = useSelector(state => state);
+  const storeTodosArray = useTypedSelector((state) => state.todo);
 
-  const addButtonHandler = (title: string): void => {
-    const newItem: listItem = {
-      title: title,
-      id: Date.now(),
-      checked: false,
-    };
-    if (title) {
-      setList([newItem, ...list]);
-    } else {
-      return;
-    }
-    setInputText("");
-  };
+  // const addButtonHandler = (title: string): void => {
+  //   const newItem: listItem = {
+  //     title: title,
+  //     id: Date.now(),
+  //     checked: false,
+  //   };
+  //   if (title) {
+  //     setList([newItem, ...list]);
+  //   } else {
+  //     return;
+  //   }
+  //   setInputText("");
+  // };
 
   const inputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -42,19 +46,19 @@ export const App: React.FC = () => {
     setInputText(event.target.value);
   };
 
-  const inputKeyPress = (event: React.KeyboardEvent): void => {
-    if (event.key === "Enter" && inputRef.current?.value) {
-      const newItem: listItem = {
-        title: inputRef.current!.value,
-        id: Date.now(),
-        checked: false,
-      };
-      setList((prev) => [newItem, ...prev]);
-      setInputText("");
-    } else {
-      return;
-    }
-  };
+  // const inputKeyPress = (event: React.KeyboardEvent): void => {
+  //   if (event.key === "Enter" && inputRef.current?.value) {
+  //     const newItem: listItem = {
+  //       title: inputRef.current!.value,
+  //       id: Date.now(),
+  //       checked: false,
+  //     };
+  //     setList((prev) => [newItem, ...prev]);
+  //     setInputText("");
+  //   } else {
+  //     return;
+  //   }
+  // };
 
   const removeItem = (id?: number) => {
     setList((prev) =>
@@ -91,9 +95,16 @@ export const App: React.FC = () => {
           <div className="todo-app">
             <header className="todo-app-header">
               <h1 className="title">To do app</h1>
-              {/* <div className="todostosod">
-              {store}
-              </div> */}
+              <div className="todostosod">
+                {!!storeTodosArray &&
+                  storeTodosArray.map((item, key) => {
+                    return (
+                      <span
+                        key={key}
+                      >{`${item.id}, ${item.title}, ${item.checked}`}</span>
+                    );
+                  })}
+              </div>
             </header>
             <div className="todo-app-body">
               <div className="todo-app-input-wrapper">
@@ -104,13 +115,16 @@ export const App: React.FC = () => {
                   id="todoInputText"
                   placeholder="Please enter your task..."
                   onChange={inputChangeHandler}
-                  onKeyDown={inputKeyPress}
+                  onKeyDown={(event) => {
+                    dispatch(addItemHandler(inputText, event, inputRef.current!))
+                  }}
                   value={inputText}
                   ref={inputRef}
                 />
                 <button
                   onClick={() => {
-                    addButtonHandler(inputText);
+                    // addButtonHandler(inputText);
+                    dispatch(addItemHandler(inputText))
                   }}
                   className="todo-app-input-control"
                 >
