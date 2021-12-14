@@ -124,6 +124,7 @@ export const App: React.FC = () => {
                 <button
                   onClick={() => {
                     // addButtonHandler(inputText);
+                    // dispatch(addItemHandler(inputText))
                     dispatch(addItemHandler(inputText))
                   }}
                   className="todo-app-input-control"
