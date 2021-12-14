@@ -1,29 +1,34 @@
 import { TodoActionsEnum, TodoActions } from "../../types/todo";
 import { listItem } from "../../App";
 import { Dispatch } from "redux";
+import React from "react";
 
 export const addItemHandler = (
   title?: string,
-  event?: React.KeyboardEvent,
-  inputRef?: HTMLInputElement
+  eventKey?: React.KeyboardEvent,
+  eventMouse?: React.MouseEvent,
+  inputRef?: HTMLInputElement,
+  currentState?: listItem[],
 ) => {
   return (dispatch: Dispatch<TodoActions>) => {
-    if (title) {
+    if (title && eventMouse) {
       const newItem: listItem = {
         title: title,
         id: Date.now(),
         checked: false,
       };
-      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newItem });
-      // setList([newItem, ...list]);
-    } else if (event && event.key === "Enter" && inputRef && inputRef.value) {
+      let newState = currentState;
+      newState?.push(newItem);
+      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newState! });
+    } else if (eventKey && eventKey.key === "Enter" && inputRef && inputRef.value) {
       const newItem: listItem = {
         title: inputRef.value,
         id: Date.now(),
         checked: false,
       };
-      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newItem });
-    //   setList((prev) => [newItem, ...prev]);
+      let newState = currentState;
+      newState?.push(newItem);
+      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newState! });
     //   setInputText("");
     } else {
       return;

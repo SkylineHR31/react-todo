@@ -96,14 +96,14 @@ export const App: React.FC = () => {
             <header className="todo-app-header">
               <h1 className="title">To do app</h1>
               <div className="todostosod">
-                {!!storeTodosArray &&
+                {/* {!!storeTodosArray &&
                   storeTodosArray.map((item, key) => {
                     return (
                       <span
                         key={key}
                       >{`${item.id}, ${item.title}, ${item.checked}`}</span>
                     );
-                  })}
+                  })} */}
               </div>
             </header>
             <div className="todo-app-body">
@@ -116,16 +116,14 @@ export const App: React.FC = () => {
                   placeholder="Please enter your task..."
                   onChange={inputChangeHandler}
                   onKeyDown={(event) => {
-                    dispatch(addItemHandler(inputText, event, inputRef.current!))
+                    dispatch(addItemHandler(inputText, event, undefined, inputRef.current!, storeTodosArray))
                   }}
                   value={inputText}
                   ref={inputRef}
                 />
                 <button
-                  onClick={() => {
-                    // addButtonHandler(inputText);
-                    // dispatch(addItemHandler(inputText))
-                    dispatch(addItemHandler(inputText))
+                  onClick={(event) => {
+                    dispatch(addItemHandler(inputText, undefined, event, undefined, storeTodosArray))
                   }}
                   className="todo-app-input-control"
                 >

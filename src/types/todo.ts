@@ -25,7 +25,7 @@ interface IRemoveToDo {
 
 interface IAddToDo {
   type: TodoActionsEnum.ADD_TODO;
-  payload: listItem;
+  payload: listItem[];
 }
 
 // edit here
