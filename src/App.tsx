@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 // components
 import TodoList from "./components/TodoList/TodoList";
@@ -10,6 +11,7 @@ import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 // styles
 import "./styles/layout.scss";
 import "./styles/todo.scss";
+import { addItemHandler } from "./store/actionsCreators/ToDoActionCreators";
 
 // images
 
@@ -18,38 +20,12 @@ export const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addButtonHandler = (title: string): void => {
-    const newItem: listItem = {
-      title: title,
-      id: Date.now(),
-      checked: false,
-    };
-    if (title) {
-      setList([newItem, ...list]);
-    } else {
-      return;
-    }
-    setInputText("");
-  };
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setInputText(event.target.value);
-  };
-
-  const inputKeyPress = (event: React.KeyboardEvent): void => {
-    if (event.key === "Enter" && inputRef.current?.value) {
-      const newItem: listItem = {
-        title: inputRef.current!.value,
-        id: Date.now(),
-        checked: false,
-      };
-      setList((prev) => [newItem, ...prev]);
-      setInputText("");
-    } else {
-      return;
-    }
   };
 
   const removeItem = (id?: number) => {
@@ -97,13 +73,15 @@ export const App: React.FC = () => {
                   id="todoInputText"
                   placeholder="Please enter your task..."
                   onChange={inputChangeHandler}
-                  onKeyDown={inputKeyPress}
+                  onKeyDown={(event) => {
+                    dispatch(addItemHandler(inputText, event, undefined, inputRef.current!))
+                  }}
                   value={inputText}
                   ref={inputRef}
                 />
                 <button
-                  onClick={() => {
-                    addButtonHandler(inputText);
+                  onClick={(event) => {
+                    dispatch(addItemHandler(inputText, undefined, event))
                   }}
                   className="todo-app-input-control"
                 >
@@ -115,7 +93,6 @@ export const App: React.FC = () => {
               </div>
               <div className="todo-list-wrapper">
                 <TodoList
-                  toDoList={list}
                   removeHandler={removeItem}
                   checkHandler={checkItem}
                 ></TodoList>
