@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-// store imports
-import { useTypedSelector } from "./hookah/useTypedSelector";
-
 // components
 import TodoList from "./components/TodoList/TodoList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,41 +21,12 @@ export const App: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
-  const storeTodosArray = useTypedSelector((state) => state.todo);
-
-  // const addButtonHandler = (title: string): void => {
-  //   const newItem: listItem = {
-  //     title: title,
-  //     id: Date.now(),
-  //     checked: false,
-  //   };
-  //   if (title) {
-  //     setList([newItem, ...list]);
-  //   } else {
-  //     return;
-  //   }
-  //   setInputText("");
-  // };
 
   const inputChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setInputText(event.target.value);
   };
-
-  // const inputKeyPress = (event: React.KeyboardEvent): void => {
-  //   if (event.key === "Enter" && inputRef.current?.value) {
-  //     const newItem: listItem = {
-  //       title: inputRef.current!.value,
-  //       id: Date.now(),
-  //       checked: false,
-  //     };
-  //     setList((prev) => [newItem, ...prev]);
-  //     setInputText("");
-  //   } else {
-  //     return;
-  //   }
-  // };
 
   const removeItem = (id?: number) => {
     setList((prev) =>
@@ -95,16 +63,6 @@ export const App: React.FC = () => {
           <div className="todo-app">
             <header className="todo-app-header">
               <h1 className="title">To do app</h1>
-              <div className="todostosod">
-                {/* {!!storeTodosArray &&
-                  storeTodosArray.map((item, key) => {
-                    return (
-                      <span
-                        key={key}
-                      >{`${item.id}, ${item.title}, ${item.checked}`}</span>
-                    );
-                  })} */}
-              </div>
             </header>
             <div className="todo-app-body">
               <div className="todo-app-input-wrapper">
@@ -116,14 +74,14 @@ export const App: React.FC = () => {
                   placeholder="Please enter your task..."
                   onChange={inputChangeHandler}
                   onKeyDown={(event) => {
-                    dispatch(addItemHandler(inputText, event, undefined, inputRef.current!, storeTodosArray))
+                    dispatch(addItemHandler(inputText, event, undefined, inputRef.current!))
                   }}
                   value={inputText}
                   ref={inputRef}
                 />
                 <button
                   onClick={(event) => {
-                    dispatch(addItemHandler(inputText, undefined, event, undefined, storeTodosArray))
+                    dispatch(addItemHandler(inputText, undefined, event))
                   }}
                   className="todo-app-input-control"
                 >
@@ -135,7 +93,6 @@ export const App: React.FC = () => {
               </div>
               <div className="todo-list-wrapper">
                 <TodoList
-                  toDoList={list}
                   removeHandler={removeItem}
                   checkHandler={checkItem}
                 ></TodoList>

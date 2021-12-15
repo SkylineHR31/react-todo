@@ -2,26 +2,26 @@ import React from "react";
 
 // components
 import TodoListItem from "../TodoListItem/TodoListItem";
-import { listItem } from "../../App";
 
 // styles
 import "./TodoList.scss";
+import { useTypedSelector } from "../../hookah/useTypedSelector";
 
 interface ITodoList {
-  toDoList: listItem[];
   removeHandler: (id?: number) => any;
   checkHandler: (id?: number) => any;
 }
 
 const TodoList: React.FC<ITodoList> = ({
-  toDoList,
   removeHandler,
   checkHandler,
 }) => {
+  const storeTodosArray = useTypedSelector((state) => state.todo);
+  
   return (
     <ul className="todo-list">
-      {!!toDoList &&
-        toDoList.map((item) => {
+      {!!storeTodosArray &&
+        storeTodosArray.map((item) => {
           return (
             <TodoListItem
               key={item.id}

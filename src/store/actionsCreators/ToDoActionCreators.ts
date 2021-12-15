@@ -7,31 +7,32 @@ export const addItemHandler = (
   title?: string,
   eventKey?: React.KeyboardEvent,
   eventMouse?: React.MouseEvent,
-  inputRef?: HTMLInputElement,
-  currentState?: listItem[],
+  inputRef?: HTMLInputElement
 ) => {
   return (dispatch: Dispatch<TodoActions>) => {
+    let newItemArray: listItem[] = [];
+    let newItem: listItem;
     if (title && eventMouse) {
-      const newItem: listItem = {
+      newItem = {
         title: title,
         id: Date.now(),
         checked: false,
       };
-      let newState = currentState;
-      newState?.push(newItem);
-      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newState! });
-    } else if (eventKey && eventKey.key === "Enter" && inputRef && inputRef.value) {
-      const newItem: listItem = {
+    } else if (
+      eventKey &&
+      eventKey.key === "Enter" &&
+      inputRef &&
+      inputRef.value
+    ) {
+      newItem = {
         title: inputRef.value,
         id: Date.now(),
         checked: false,
       };
-      let newState = currentState;
-      newState?.push(newItem);
-      dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newState! });
-    //   setInputText("");
     } else {
       return;
     }
+    newItemArray.push(newItem);
+    dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newItemArray });
   };
 };
