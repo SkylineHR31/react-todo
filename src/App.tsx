@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 
 // components
@@ -48,13 +48,13 @@ export const App: React.FC = () => {
     setList([...list]);
   };
 
-  useEffect(() => {
-    setList(JSON.parse(window.localStorage.getItem("todosList") || ""));
-  }, []);
+  // useEffect(() => {
+  //   setList(JSON.parse(window.localStorage.getItem("todosList") || ""));
+  // }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem("todosList", JSON.stringify(list));
-  }, [list]);
+  // useEffect(() => {
+  //   window.localStorage.setItem("todosList", JSON.stringify(list));
+  // }, [list]);
 
   return (
     <main className="app">
