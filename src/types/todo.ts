@@ -20,7 +20,7 @@ interface ICheckToDo {
 
 interface IRemoveToDo {
   type: TodoActionsEnum.REMOVE_TODO;
-  payload: listItem[];
+  payload: number;
 }
 
 interface IAddToDo {
@@ -28,6 +28,9 @@ interface IAddToDo {
   payload: listItem[];
 }
 
-// edit here
+interface IEditToDo {
+  type: TodoActionsEnum.EDIT_TODO;
+  payload: listItem[];
+}
 
-export type TodoActions = ICheckToDo | IRemoveToDo | IAddToDo;
+export type TodoActions = ICheckToDo | IRemoveToDo | IAddToDo | IEditToDo;

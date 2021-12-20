@@ -13,17 +13,29 @@
   .title {
     text-transform: uppercase;
     display: inline-block;
+    border: none;
+    outline: none;
+    height: 100%;
+    background-color: transparent;
+    flex: 1;
+
+    &-wrapper {
+      flex: 1;
+      display: flex;
+    }
   }
 
   &-text {
     display: flex;
     align-items: center;
+    flex: 1;
+    padding-right: 20px;
   }
 
   &-check {
     margin-right: 10px;
 
-    &:checked + .title {
+    &:checked + .title-wrapper .title {
       text-decoration: line-through;
     }
   }

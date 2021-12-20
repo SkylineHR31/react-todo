@@ -6,21 +6,14 @@ import TodoListItem from "../TodoListItem/TodoListItem";
 // styles
 import "./TodoList.scss";
 import { useTypedSelector } from "../../hookah/useTypedSelector";
+import { listItem } from "../../App";
 
-interface ITodoList {
-  removeHandler: (id?: number) => any;
-  checkHandler: (id?: number) => any;
-}
+const TodoList: React.FC = () => {
+  const storeTodosArray: listItem[] = useTypedSelector((state) => state.todoStore);
 
-const TodoList: React.FC<ITodoList> = ({
-  removeHandler,
-  checkHandler,
-}) => {
-  const storeTodosArray = useTypedSelector((state) => state.todo);
-  
   return (
     <ul className="todo-list">
-      {!!storeTodosArray &&
+      {!!storeTodosArray && storeTodosArray.length > 0 &&
         storeTodosArray.map((item) => {
           return (
             <TodoListItem
@@ -28,8 +21,6 @@ const TodoList: React.FC<ITodoList> = ({
               title={item.title}
               checked={item.checked}
               id={item.id}
-              removeHandler={removeHandler}
-              checkHandler={checkHandler}
             ></TodoListItem>
           );
         })}

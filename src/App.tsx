@@ -16,7 +16,6 @@ import { addItemHandler } from "./store/actionsCreators/ToDoActionCreators";
 // images
 
 export const App: React.FC = () => {
-  const [list, setList] = useState<listItem[]>([]);
   const [inputText, setInputText] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,34 +26,6 @@ export const App: React.FC = () => {
   ): void => {
     setInputText(event.target.value);
   };
-
-  const removeItem = (id?: number) => {
-    setList((prev) =>
-      prev.filter((item) => {
-        return item.id !== id;
-      })
-    );
-  };
-
-  const checkItem = (id?: number) => {
-    let itemIndex = list.findIndex((_item) => {
-      return _item.id === id;
-    });
-
-    if (itemIndex > -1) {
-      list[itemIndex].checked = !list[itemIndex].checked;
-    }
-
-    setList([...list]);
-  };
-
-  // useEffect(() => {
-  //   setList(JSON.parse(window.localStorage.getItem("todosList") || ""));
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("todosList", JSON.stringify(list));
-  // }, [list]);
 
   return (
     <main className="app">
@@ -74,14 +45,25 @@ export const App: React.FC = () => {
                   placeholder="Please enter your task..."
                   onChange={inputChangeHandler}
                   onKeyDown={(event) => {
-                    dispatch(addItemHandler(inputText, event, undefined, inputRef.current!))
+                    if (event && event.key === "Enter") {
+                      dispatch(
+                        addItemHandler(
+                          inputText,
+                          event,
+                          undefined,
+                          inputRef.current!
+                        )
+                      );
+                      setInputText("");
+                    }
                   }}
                   value={inputText}
                   ref={inputRef}
                 />
                 <button
                   onClick={(event) => {
-                    dispatch(addItemHandler(inputText, undefined, event))
+                    dispatch(addItemHandler(inputText, undefined, event));
+                    setInputText("");
                   }}
                   className="todo-app-input-control"
                 >
@@ -92,10 +74,7 @@ export const App: React.FC = () => {
                 </button>
               </div>
               <div className="todo-list-wrapper">
-                <TodoList
-                  removeHandler={removeItem}
-                  checkHandler={checkItem}
-                ></TodoList>
+                <TodoList></TodoList>
               </div>
             </div>
             <footer className="todo-app-footer"></footer>

@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: "todosList",
+  key: "state",
   storage,
   debug: true,
 };
@@ -17,5 +17,5 @@ export const store = createStore(
 );
 
 export const persistor = persistStore(store, null, () => {
-  console.log("restoredState", store.getState());
+  // console.log("restoredState", store.getState());
 });

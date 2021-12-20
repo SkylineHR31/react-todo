@@ -18,12 +18,7 @@ export const addItemHandler = (
         id: Date.now(),
         checked: false,
       };
-    } else if (
-      eventKey &&
-      eventKey.key === "Enter" &&
-      inputRef &&
-      inputRef.value
-    ) {
+    } else if (eventKey && inputRef && inputRef.value) {
       newItem = {
         title: inputRef.value,
         id: Date.now(),
@@ -34,5 +29,31 @@ export const addItemHandler = (
     }
     newItemArray.push(newItem);
     dispatch({ type: TodoActionsEnum.ADD_TODO, payload: newItemArray });
+  };
+};
+
+export const checkItem = (todos: listItem[], id: number) => {
+  return (dispatch: Dispatch<TodoActions>) => {
+    let _todos = todos;
+    let itemIndex = _todos.findIndex((item) => {
+      return item.id === id;
+    });
+
+    if (itemIndex > -1) {
+      _todos[itemIndex].checked = !_todos[itemIndex].checked;
+    }
+    dispatch({ type: TodoActionsEnum.CHECK_TODO, payload: _todos });
+  };
+};
+
+export const removeItem = (id: number) => {
+  return (dispatch: Dispatch<TodoActions>) => {
+    dispatch({ type: TodoActionsEnum.REMOVE_TODO, payload: id });
+  };
+};
+
+export const editItem = (todos: listItem[] ,id: number, inputRef?: HTMLInputElement) => {
+  return (dispatch: Dispatch<TodoActions>) => {
+    dispatch({ type: TodoActionsEnum.EDIT_TODO, payload: todos });
   };
 };
