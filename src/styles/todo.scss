@@ -1,0 +1,51 @@
+@import "./mixin.scss";
+
+.todo-app {
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    @include boxShadow;
+
+    &-header {
+        min-height: 100px;
+        @include blockBorder;
+        @include blockPaddings;
+    }
+
+    &-body {
+        flex: 1;
+        @include blockBorder;
+        @include blockPaddings;
+    }
+
+    &-footer {
+        min-height: 100px;
+        @include blockPaddings;
+    }
+
+    &-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        border-bottom: 3px solid $font-header;
+        height: 100%;
+
+        &-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 32px;
+            gap: 32px;
+            margin-bottom: 20px;
+        }
+
+        &-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $font-header;
+            width: 32px;
+            height: 32px;
+        }
+    }
+}
