@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -10,6 +10,7 @@ import "./TodoListItem.scss";
 import { useTypedSelector } from "../../hookah/useTypedSelector";
 import {
   checkItem,
+  editItem,
   removeItem,
 } from "../../store/actionsCreators/ToDoActionCreators";
 import { useDispatch } from "react-redux";
@@ -23,7 +24,14 @@ interface ITodoListItem {
 const TodoListItem: React.FC<ITodoListItem> = ({ title, id, checked }) => {
   const storeTodosArray = useTypedSelector((state) => state.todoStore);
   const dispatch = useDispatch();
-  const todoRef = useRef(null);
+  const todoRef = useRef<HTMLInputElement>(null);
+  const [inputText, setInputText] = useState<string>(title);
+
+  const inputChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setInputText(event.target.value);
+  };
 
   return (
     <li className="todo-list-item">
@@ -39,13 +47,20 @@ const TodoListItem: React.FC<ITodoListItem> = ({ title, id, checked }) => {
           }}
         />
         <span className="title-wrapper">
-          <input className="title" type="text" value={title} readOnly ref={todoRef} />
+          <input
+            onChange={inputChangeHandler}
+            className="title"
+            type="text"
+            value={inputText}
+            readOnly
+            ref={todoRef}
+          />
         </span>
       </label>
       <div className="todo-list-item-controls">
         <button
           onClick={() => {
-            // editHandler(id);
+            dispatch(editItem(storeTodosArray, id, todoRef.current!));
           }}
           className="todo-list-item-edit"
         >

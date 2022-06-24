@@ -13,11 +13,18 @@
   .title {
     text-transform: uppercase;
     display: inline-block;
-    border: none;
+    border: 3px solid transparent;
     outline: none;
     height: 100%;
     background-color: transparent;
     flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+
+    &.focused {
+      border: 3px solid $font-header;
+      text-decoration: none !important;
+    }
 
     &-wrapper {
       flex: 1;

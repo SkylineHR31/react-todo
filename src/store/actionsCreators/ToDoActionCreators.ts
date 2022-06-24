@@ -52,8 +52,35 @@ export const removeItem = (id: number) => {
   };
 };
 
-export const editItem = (todos: listItem[] ,id: number, inputRef?: HTMLInputElement) => {
+export const editItem = (
+  todos: listItem[],
+  id: number,
+  inputRef?: HTMLInputElement
+) => {
   return (dispatch: Dispatch<TodoActions>) => {
-    dispatch({ type: TodoActionsEnum.EDIT_TODO, payload: todos });
+    let _todos = todos;
+    if (!!inputRef) {
+      inputRef.removeAttribute("readonly");
+      inputRef.classList.add("focused");
+      inputRef.focus();
+    }
+
+    let itemIndex = _todos.findIndex((item) => {
+      return item.id === id;
+    });
+
+    if (itemIndex > -1) {
+      _todos[itemIndex].title = inputRef?.value || "";
+    }
+
+    inputRef?.addEventListener("keypress", function keypressHandler(event) {
+      if (event.key === "Enter") {
+        dispatch({ type: TodoActionsEnum.EDIT_TODO, payload: _todos })
+        inputRef.setAttribute("readonly", "readonly");
+        inputRef.classList.remove("focused");
+        inputRef.blur();
+        inputRef?.removeEventListener("keypress", keypressHandler);
+      }
+    });
   };
 };

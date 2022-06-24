@@ -19,7 +19,7 @@ export default function todoReducer(
     case TodoActionsEnum.ADD_TODO:
       return [...state, ...action.payload];
     case TodoActionsEnum.EDIT_TODO:
-      return [...state, ...action.payload];
+      return [...action.payload];
     default:
       return state;
   }
